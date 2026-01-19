@@ -1,0 +1,114 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+	int choice;
+
+	do {
+		
+		cout << "1. Factorial (n!)" << endl; 
+		cout << "2. Power " << endl;
+			cout << "3. Permutation" << endl;
+		cout << "4. Combination "<<endl;
+		cout << "5. Exit" << endl;
+		cout << "Enter your choice: ";
+		cin >> choice;
+
+		switch (choice) {
+		case 1: {  
+			int n;
+			cout << "Enter n: ";
+			cin >> n;
+
+			if (n < 0) {
+				cout << "Invalid input! n must be non-negative"<<endl;
+			}
+			else {
+				long long fact = 1;
+				for (int i = 1; i <= n; i++) {
+					fact *= i;
+				}
+				cout << "Factorial of " << n << " is " << fact << endl;
+			}
+			break;
+		}
+
+		case 2: {  
+			double base;
+			int exp;
+			cout << "Enter base: ";
+			cin >> base;
+			cout << "Enter exponent: ";
+			cin >> exp;
+
+			double result = 1;
+			if (exp >= 0) {
+				for (int i = 1; i <= exp; i++) {
+					result *= base;
+				}
+			}
+			else { 
+				for (int i = 1; i <= -exp; i++) {
+					result /= base;
+				}
+			}
+
+			cout << base << "^" << exp << " = " << result << endl;
+			break;
+		}
+
+		case 3: {  
+			int n, r;
+			cout << "Enter n: ";
+			cin >> n;
+			cout << "Enter r: ";
+			cin >> r;
+
+			if (r > n || r < 0) {
+				cout << "Invalid input! r must be between 0 and n" << endl;
+			}
+			else {
+				long long npr = 1;
+				for (int i = n; i > n - r; i--) {
+					npr *= i;
+				}
+				cout << n << "P" << r << " = " << npr << endl;
+			}
+			break;
+		}
+
+		case 4: {  
+			int n, r;
+			cout << "Enter n: ";
+			cin >> n;
+			cout << "Enter r: ";
+			cin >> r;
+
+			if (r > n || r < 0) {
+				cout << "Invalid input! r must be between 0 and n.\n";
+			}
+			else {
+				long long factN = 1, factR = 1, factNR = 1;
+
+				for (int i = 1; i <= n; i++) factN *= i;
+				for (int i = 1; i <= r; i++) factR *= i;
+				for (int i = 1; i <= n - r; i++) factNR *= i;
+
+				long long ncr = factN / (factR * factNR);
+				cout << n << "C" << r << " = " << ncr << endl;
+			}
+			break;
+		}
+
+		case 5:
+			cout << "Exiting program." << endl;
+			break;
+
+		default:
+			cout << "Invalid choice! Please enter a number between 1 and 5."<<endl;
+		}
+
+	} while (choice != 5);
+	system("pause");
+	return 0;
+}
