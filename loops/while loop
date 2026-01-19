@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+	int infected, healthy;
+
+	
+	cout << "Enter  number of infected people: ";
+	cin >> infected;
+	cout << "Enter  number of healthy people: ";
+	cin >> healthy;
+
+	int day = 0;
+
+	
+	while (infected > 0 && healthy > 0) {
+		day++;
+
+		
+		int new_infections = infected * 2;
+		if (new_infections > healthy)
+			new_infections = healthy; 
+		int recoveries = (infected * 60) / 100;  
+		infected = infected + new_infections - recoveries;
+		healthy = healthy - new_infections + recoveries;
+
+		
+		cout << "Day " << day << ": Infected = " << infected << ", Healthy = " << healthy << endl;
+	}
+
+	
+	cout << "\nSimulation ended on day " << day << "." << endl;
+	if (infected == 0)
+		cout << "The virus was wiped out!" << endl;
+	else if (healthy == 0)
+		cout << "Entire population is infected!" << endl;
+	system("pause");
+	return 0;
+}
