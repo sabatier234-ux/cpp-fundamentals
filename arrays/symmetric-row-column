@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+int main() {
+	int arr[5][5] = { { 1,2,3,2,1 },
+	{ 4,5,6,7,8 },
+	{ 1,2,3,4,5 },
+	{ 4,5,6,7,8 },
+	{ 2,3,4,5,6 } };
+	bool found = false;
+	cout << "symmetric row:" << endl;
+	
+	for (int i = 0; i < 5; i++) {
+		bool isSymmetric = true;
+		for (int j = 0; j < 5; j++) {
+			if (arr[i][j] != arr[i][5 - 1 - j])
+				isSymmetric = false;
+		}
+		if (isSymmetric) {
+			cout << i + 1 << " ";
+			found = true;
+		}
+		
+	}
+	cout << "\nsymmetric column:" << endl;
+	
+	for (int i= 0; i< 5; i++) {
+		bool isColumn = true;
+		for (int  j= 0; j < 5; j++) {
+			if (arr[i][j] != arr[5-1-j][i])
+				isColumn = false;
+			
+		}
+		if (isColumn) {
+			cout << i + 1 << " ";
+			found = true;
+		}
+		
+	}
+	if (!found)
+		cout << "\nno symmetry found" << endl;
+
+	
+	system("pause");
+	return 0;
+}
