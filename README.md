@@ -1,5 +1,7 @@
 # cpp-fundamentals
-This repository contains basic cpp programs containing:
+This repository contains my practice programs for:
+<br>
+control structures
 <br>
 loops
 <br>
@@ -8,4 +10,6 @@ Function
 Arrays
 <br>
 File handling
-practiced as part of my BSCS course at FAST
+<br>
+I am BSCS student at FAST university,currently learning C++ and python
+
