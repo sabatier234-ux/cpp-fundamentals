@@ -1,0 +1,192 @@
+#include <iostream>
+#include <string>
+#include<fstream>
+using namespace std;
+int loadRecords(const string&  filename,string rolls[], string names[], int marks[][5], int
+	maxN) {
+	
+	ifstream data(filename);
+	int N;
+	data >> N;
+
+	if (N > maxN)
+		N = maxN;
+	
+	if (data.is_open())
+		cout << "file successfully opened" << endl;
+	else
+		cout << "file not opened" << endl;
+	
+		for (int i = 0; i < N; i++) {
+			data >> rolls[i];
+			data >> names[i];
+			for (int j = 0; j < 5; j++) {
+				data >> marks[i][j];
+			}
+		}
+	
+	data.close();
+	return N ;
+}
+void computeTotalAndGrade(int marks[][5], int totals[], char grades[], int N){
+   for (int i = 0; i < N; i++) {
+			int sum = 0;
+    for (int j = 0; j < 5; j++) {
+				sum += marks[i][j];
+			}
+	totals[i] = sum;
+	double avg = sum / 5.0;  
+            if (avg >= 80) 
+				grades[i] = 'A';
+			else if (avg >= 70) 
+				grades[i] = 'B';
+			else if (avg >= 60)
+				grades[i] = 'C';
+			else if (avg >= 50) 
+				grades[i] = 'D';
+			else 
+				grades[i] = 'F';
+		}
+	}
+
+	
+
+void writeReport(const string&filename,int marks[][5],string rolls[],string names[],int totals[],char grades[],int N) {
+	ofstream report(filename);
+	if (!report) {
+		cout << "file doesn't opened" << endl;
+		return;
+	}
+	int classtotal = 0;
+	int highest = 0;
+	for (int i = 0; i < N; i++) {
+		classtotal += totals[i];
+		if (totals[i] > highest)
+			highest = totals[i];
+
+	}
+	double classavg = classtotal / (N * 5);
+	report << "average of class:" << classavg << endl;
+	for (int i = 0; i < N; i++) {
+		double avg = totals[i] / 5.0;
+		report << rolls[i] << " " << names[i]<<" ";
+		report<< "total:" << totals[i] << endl;
+		report << "average:" << avg << endl;;
+		report << "grade:" << grades[i] << endl;
+
+	}
+	report << "top scorer:" << endl;
+	for (int i = 0; i < N; i++) {
+		if (totals[i] == highest)
+			report << rolls[i] << " " << names[i] << " " << totals[i] << endl;
+	}
+	report.close();
+
+
+
+	 }
+	 
+int findByRoll(const string rolls[], int N, const string roll) {
+	for (int i = 0; i < N; i++) {
+		if (roll == rolls[i])
+			return i;
+	}
+	return -1;
+	 }
+void saveUpdated(const string& filename,string names[],string rolls[],int marks[][5],int N) {
+	ofstream save(filename);
+	save << N << endl;
+
+	for (int i = 0; i < N; i++) {
+		save<< rolls[i] << " " << names[i] << " ";
+		for (int j = 0; j < 5; j++) {
+			save << marks[i][j] << " ";
+		}
+		save << endl;
+}
+
+	save.close();
+}
+int main() {
+	int N;
+	cout << "enter total number of students:";
+	cin >> N;
+	int MAX = 300;
+
+	string rolls[300];
+	string names[300];
+	int marks[300][5];
+	cout << "enter roll numbers:" << endl;
+	for (int i = 0; i < N; i++) {
+		
+		cin >> rolls[i];
+	}
+	cout << "enter names of students:" << endl;
+	cin.ignore();
+	for (int i = 0; i < N; i++) {
+		
+		getline(cin, names[i]);
+	}
+		
+		
+
+		
+	cout << "enter marks of five subjects:" << endl;
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < 5; j++) {
+			
+			cin >> marks[i][j];
+		}
+		cout << endl;
+	}
+	ofstream file("students.txt");
+	file << N << endl;
+	for (int i = 0; i < N; i++) {
+		file << rolls[i]<<" ";
+		file << names[i]<<" ";
+	
+		for (int j = 0; j < 5; j++) {
+
+			file << marks[i][j] << " ";
+		}
+		file << endl;
+	}
+	file.close();
+	int totals[300];
+	char grades[300];
+
+	 N = loadRecords("students.txt", rolls, names, marks, MAX);
+	cout << "Loaded " << N << " students from file.\n";
+
+	computeTotalAndGrade(marks, totals, grades, N);
+
+	
+	writeReport("report.txt",marks,rolls, names, totals, grades, N);
+
+	
+	string rollToUpdate;
+	cout << "Enter roll to update: ";
+	cin >> rollToUpdate;
+
+	int idx = findByRoll(rolls, N, rollToUpdate);
+	if (idx != -1) {
+		cout << "Enter new 5 marks: ";
+		for (int j = 0; j < 5; j++)
+			cin >> marks[idx][j];
+	}
+	else {
+		cout << "Roll not found!" << endl;
+	}
+
+	
+	saveUpdated("students_updated.txt", rolls, names, marks, N);
+
+
+
+
+	system("pause");
+	return 0;
+	
+
+
+}
